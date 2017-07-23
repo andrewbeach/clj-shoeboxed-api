@@ -5,4 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [clj-http "3.6.1"]
-                 [cheshire "5.7.1"]])
+                 [cheshire "5.7.1"]]
+  :deploy-repositories [["clojars" {:sign-releases false}]])
