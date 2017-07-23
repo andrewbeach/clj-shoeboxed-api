@@ -18,23 +18,23 @@
 
 ;;; API Endpoints
 
-(defn account [access-token account-id]
+(defn get-account [access-token account-id]
   (get-account-endpoint account-id "" {} access-token))
 
-(defn account-categories [access-token account-id]
-  (:categories 
+(defn get-account-categories [access-token account-id]
+  (:categories
    (get-account-endpoint account-id "categories" {} access-token)))
 
-(defn account-settings [access-token account-id]
+(defn get-account-settings [access-token account-id]
   (get-account-endpoint account-id "settings" {} access-token))
 
-(defn account-documents [access-token account-id options]
+(defn get-account-documents [access-token account-id options]
   (:documents
    (get-account-endpoint account-id "documents" options access-token)))
 
-(defn- account-documents-by-type [type access-token account-id options]
+(defn- get-account-documents-by-type [type access-token account-id options]
   (account-documents access-token account-id (merge {:type type} options)))
 
-(def account-receipts (partial account-documents-by-type "receipt"))
-(def account-business-cards (partial account-documents-by-type "business-card"))
-(def account-other-documents (partial account-documents-by-type "other"))
+(def get-account-receipts (partial get-account-documents-by-type "receipt"))
+(def get-account-business-cards (partial get-account-documents-by-type "business-card"))
+(def get-account-other-documents (partial get-account-documents-by-type "other"))
