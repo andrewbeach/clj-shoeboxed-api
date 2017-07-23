@@ -1,6 +1,6 @@
 # shoeboxed-api
 
-A Clojure library designed to wrap the Shoeboxed v2 API. 
+A Clojure library wrapping the Shoeboxed v2 HTTP API. 
 
 ## Usage
 
