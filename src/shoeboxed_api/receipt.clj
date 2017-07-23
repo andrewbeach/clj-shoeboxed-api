@@ -10,8 +10,11 @@
 (defn group-by-vendor [receipts]
   (group-by :vendor receipts))
 
+(defn list-vendors [receipts]
+  (sort (filter some? (keys (group-by-vendor receipts)))))
+
 (defn group-by-last4 [receipts]
   (group-by #(get-in % [:paymentType :lastFourDigits]) receipts))
 
 (defn list-last4 [receipts]
-  (sort (keys (group-by-last4 receipts))))
+  (sort (filter some? (keys (group-by-last4 receipts)))))

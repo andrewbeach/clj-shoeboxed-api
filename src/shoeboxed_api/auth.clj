@@ -4,18 +4,10 @@
             [clj-http.client :as http]
             [cheshire.core :as cheshire]))
 
-;; (def access-token (atom ""))
-
-(def account-id "680886300")
-
-;; (defn get-authorization []
-;;     (http/get (:base-uri config/sbx-client)
-;;       {:query-params {"client_id" (:id sbx-client)
-;;                       "response_type" "code"
-;;                       "scope" "all"
-;;                       "redirect_uri" (:redirect-uri sbx-client)
-;;                       "state" "abc123"
-;;                       }}))
+(defn initialize-client [client-id client-secret redirect-uri]
+  {:id client-id
+   :secret client-secret
+   :redirect-uri redirect-uri})
 
 (defn authorize [client authorization-code]
   "return (access-token, refresh-token)"
@@ -25,10 +17,8 @@
                    :redirect_uri (:redirect-uri client)}
      :basic-auth [(:id client) (:secret client)]}))
 
-(defn get-access-token [client authorization-code]
-  (:access_token
-   (parse-body
-     (authorize client authorization-code))))
-
-;; (defn set-access-token [authorization-code]
-;;   (reset! access-token (get-access-token authorization-code)))
+(defn authorize-client [client authorization-code]
+  (let [auth-response (parse-body (authorize client authorization-code))]
+    (assoc client
+      :access-token (:access_token auth-response)
+      :refresh-token (:refresh_token auth-response))))

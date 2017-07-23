@@ -4,8 +4,6 @@ A Clojure library wrapping the Shoeboxed v2 HTTP API. This is currently a hobby 
 
 All endpoints returning data do so in the form of Clojure collections; when an HTTP endpoint returns a JSON response, you can expect a keywordized Clojure hash map. 
 
-Due to the power of Clojure collections, combined with Clojure's repl-driven development process, I will claim this is the easiest way available to explore the Shoeboxed API. The `examples/` directory contains real world demonstrations of this. 
-
 Since this is a hobby project, I will keep version numbers below 1.0.0 for the time being. If this becomes a working clojar, I will bump the version over 1.0.0 and promise api stability.
 
 This is my first attempt at wrapping an http api in clojure, so please let me know if there are "best practices" that I'm not following here :-)
@@ -25,7 +23,7 @@ To experiment with this in a clojure repl, you will need to manually call the Sh
 
 ### Config
 
-The config namespace contains default Shoeboxed API uri information, as well as helpers for building a Shoeboxed API client. 
+The config namespace contains default Shoeboxed API configuration, as well as helpers for building a Shoeboxed API client. 
 
 `config/sbx` is always constant, as it defines the various uris encountered when interacting with the Shoeboxed API. 
 
@@ -37,29 +35,23 @@ Currently, this library assumes that you will manually redirect your user to Sho
 
 ### OAuth
 
-The authorization namespace has helper functions for obtaining an API access token after having the user authenticate (and thus provide an authentication code). 
+The authorization namespace has helper functions for obtaining an API access token after having the user authenticate (and thus return an authentication code). 
 
 ### API Endpoints
 
 The api namespace contains functions for each Shoeboxed api endpoint, and they are named to match the HTTP API endpoints. 
 
-For example, all `/account/{account_id}/xxx` HTTP endpoints have corresponding functions of the form `<verb>-account-xxx` that take the account id as a parameter, along with an access token and options. 
+**NOTE**: currently, only get endpoints are implemented.
+
+For example, all `/account/{account_id}/xxx` HTTP endpoints have corresponding functions of the form `<verb>-account-xxx` that take the account id as a parameter, along with a client and options. 
 
 The options are added directly to the query params for a GET request. 
 
-So, GET `/account/{account_id}/categories?foo=bar` becomes `(get-account-categories access-token account-id {:foo "bar"})`.
+So, GET `/account/{account_id}/categories?foo=bar` becomes `(get-account-categories account-id client {:foo "bar"})`.
 
-The order of arguments of these functions is intentional: 
+To make API Endpoints, `client` must have a valid token at `:access-token`. 
 
-- the first argument is always the access-token so that the functions can be partially applied for a given user's authentication context.
-- the second argument, for qualified routes like `accounts/{account_id}`, is that qualification variable (account id in this case), so that functions could be further applied for the local account context.
-- an options parameter can be passed in containing key-value pairs matching the Shoeboxed API options for that endpoint. Options will be merged into pre-defined options in many cases. Ex: get-account-receipts merges its options parameter with `{:type "receipts"}`, so that, in addition to the given options, the result is also limited to receipts.
-
-All of these functions return the body of the endpoint's response. For those endpoints that return a more complex body, the relevant part will be returned. 
-
-For example, `account/*/documents` endpoints will return the `:documents` part of the body response, rather than the raw body (which contains other metadata, like a document count). 
-
-The function `get-endpoint` can always be used directly to get any endpoint and the raw response if that additional information is desired; I don't see this as a common use-case, so contact me if you disagree, and I can rethink the design. 
+All of these functions return the body of the endpoint's response as a clojure data structure; otherwise, the returned data exactly matches the response body declared by the HTTP API. 
 
 ### Receipt
 
