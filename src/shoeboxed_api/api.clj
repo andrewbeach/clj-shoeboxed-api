@@ -28,6 +28,33 @@
 (defn get-account-settings [access-token account-id]
   (get-account-endpoint account-id "settings" {} access-token))
 
+(defn get-account-barcode [access-token account-id]
+  (get-account-endpoint account-id "barcode" {} access-token))
+
+(defn get-account-billing-info [access-token account-id]
+  (get-account-endpoint account-id "billing-info" {} access-token))
+
+(defn get-account-users [access-token account-id]
+  (get-account-endpoint account-id "users" {} access-token))
+
+(defn get-account-coversheet [access-token account-id]
+  (get-account-endpoint account-id "coversheet" {} access-token))
+
+(defn get-account-credit-cards [access-token account-id]
+  (get-account-endpoint account-id "credit-cards" {} access-token))
+
+(defn get-account-currencies [access-token account-id]
+  (get-account-endpoint account-id "currencies" {} access-token))
+
+(defn get-account-envelopes [access-token account-id]
+  (get-account-endpoint account-id "envelopes" {} access-token))
+
+(defn get-account-billing-invoices [access-token account-id]
+  (get-account-endpoint account-id "billing/invoices" {} access-token))
+
+(defn get-account-plan [access-token account-id]
+  (get-account-endpoint account-id "plan" {} access-token))
+
 (defn get-account-documents [access-token account-id options]
   (:documents
    (get-account-endpoint account-id "documents" options access-token)))
