@@ -1,4 +1,4 @@
-(defproject shoeboxed-api "0.1.0"
+(defproject org.clojars.andrewbeach/shoeboxed-api "0.1.0"
   :description "Wrapper for the public Shoeboxed HTTP API"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
