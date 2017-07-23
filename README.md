@@ -27,9 +27,9 @@ To experiment with this in a clojure repl, you will need to manually call the Sh
 
 The config namespace contains default Shoeboxed API uri information, as well as helpers for building a Shoeboxed API client. 
 
-`config/sbx` is always constant, as it defined the various uris encountered when interacting with the Shoeboxed API. 
+`config/sbx` is always constant, as it defines the various uris encountered when interacting with the Shoeboxed API. 
 
-`config/sample-client` shows the shape of a Shoeboxed API client. 
+`config/sample-client` shows the shape needed by a Shoeboxed API client. 
 
 You will need to access your Shoeboxed account settings to create your own Shoeboxed API Application and redirect uri; after creating that, you will be given a client id and secret.
 
@@ -43,7 +43,7 @@ The authorization namespace has helper functions for obtaining an API access tok
 
 The api namespace contains functions for each Shoeboxed api endpoint, and they are named to match the HTTP API endpoints. 
 
-For example, all `/account/{account_id}/xxx` HTTP endpoints have corresponding functions `<verb>-account-xxx` that take the account id as a parameter, along with an access token and options. 
+For example, all `/account/{account_id}/xxx` HTTP endpoints have corresponding functions of the form `<verb>-account-xxx` that take the account id as a parameter, along with an access token and options. 
 
 The options are added directly to the query params for a GET request. 
 
@@ -59,7 +59,7 @@ All of these functions return the body of the endpoint's response. For those end
 
 For example, `account/*/documents` endpoints will return the `:documents` part of the body response, rather than the raw body (which contains other metadata, like a document count). 
 
-The function get-endpoint can always be used directly to get any endpoint and the raw response if that additional information is desired; I don't see this as a common usecase, so contact me if you disagree, and I can rethink the design. 
+The function `get-endpoint` can always be used directly to get any endpoint and the raw response if that additional information is desired; I don't see this as a common use-case, so contact me if you disagree, and I can rethink the design. 
 
 ### Receipt
 
