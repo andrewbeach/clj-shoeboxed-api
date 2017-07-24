@@ -1,5 +1,7 @@
 # shoeboxed-api
 
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.andrewbeach/shoeboxed-api.svg)](https://clojars.org/org.clojars.andrewbeach/shoeboxed-api)
+
 A Clojure library wrapping the Shoeboxed v2 HTTP API. This is currently a hobby project, so there is no guarantee of api stability at this time. 
 
 All endpoints returning data do so in the form of Clojure collections; when an HTTP endpoint returns a JSON response, you can expect a keywordized Clojure hash map. 
